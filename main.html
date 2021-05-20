@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <title>Weather-App</title>
+    <style>
+        :root {
+            --green: #28E0AE;
+        }
+
+        * {
+            box-sizing: border-box;
+            padding: 0px;
+            margin: 0px;
+            font-family: 'Open sans', sans-serif;
+        }
+
+        .container {
+            overflow: hidden;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            /* width: 99vw; */
+            height: 100vh;
+        }
+
+        .search {
+
+            display: flex;
+            padding: 10px;
+
+        }
+
+        input {
+            font-size: 1.4rem;
+            border: none;
+            outline: none;
+            text-align: center;
+            padding: 10px;
+
+        }
+
+        button {
+            font-size: 1.4rem;
+            height: 100%;
+            border: none;
+            background-color: #fff;
+            outline: none;
+            padding: 10px;
+        }
+
+        .maincard {
+            position: relative;
+            width: 80vw;
+            height: 30vh;
+            max-width: 400px;
+            padding: 20px;
+            min-height: 275px;
+            color: #ffffff;
+            transition: opacity 0.1s;
+            border-radius: 40px;
+            background-color: #5C2AFF;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* transition: all 2s; */
+
+        }
+
+        .temp {
+            font-size: 6rem;
+            font-weight: 600;
+        }
+
+        .selected {
+            background-color: hsla(254, 100%, 58%, 0.034);
+            color: #5C2AFF;
+            font-weight: 600;
+        }
+
+        .btn {
+            font-size: 1rem;
+            border-radius: 20px;
+            padding: 10px 30px;
+        }
+
+        .options {
+            margin-bottom: 20px;
+        }
+
+        .week {
+            max-width: 840px;
+            width: 98vw;
+            overflow-x: auto;
+            display: flex;
+            flex-direction: column;
+            /* background-color: violet; */
+            padding: 30px 0px;
+            align-items: center;
+
+        }
+
+        .card {
+            color: #ffffff;
+            background-color: #28E0AE;
+            border-radius: 30px;
+            box-shadow: 0px 30px 30px -30px hsla(164, 75%, 52%, 0.981);
+            min-width: 130px;
+            width: 300px;
+            justify-content: center;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 5px;
+            height: 210px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 10px;
+            display: flex;
+            font-size: 1.5rem;
+            /* flex-direction: column; */
+        }
+
+        .open {
+            width: 100vw;
+            height: 70vh;
+            bottom: 0px;
+            position: absolute;
+            box-shadow: none;
+            border-radius: 30px 30px 0px 0px;
+
+        }
+
+        .card:nth-child(1) {
+            /* margin-left: 0px; */
+        }
+
+        .card:nth-child(2) {
+            background-color: #FF0090;
+            box-shadow: 0px 30px 30px -30px #FF0090;
+
+        }
+
+        .card:nth-child(3) {
+            background-color: #FFAE00;
+            box-shadow: 0px 30px 30px -30px #FFAE00;
+
+        }
+
+        /* .card:nth-child(4) {
+            background-color:
+                #0090FF;
+            box-shadow: 0px 30px 30px -30px #0090FF;
+
+        }
+
+        .card:nth-child(5) {
+            background-color: #DC0000;
+            box-shadow: 0px 30px 30px -30px #DC0000;
+
+        }
+
+        .card:nth-child(6) {
+            background-color: #0051FF;
+            box-shadow: 0px 30px 30px -30px #0051FF;
+
+        } */
+
+        .hidden {
+            display: hidden;
+        }
+
+        .information {
+            overflow: hidden;
+            justify-content: space-around;
+            align-items: center;
+            display: flex;
+            /* display */
+
+
+            /* padding-bottom: 20px; */
+            color: #ffffff;
+            font-size: 2rem;
+
+            position: absolute;
+            width: 100vw;
+            opacity: 1;
+
+            border-radius: 30px 30px 0px 0px;
+            flex-direction: column;
+            bottom: 0px;
+            background-color: blue;
+            transition: height 0.2s;
+            height: 0vh;
+        }
+
+        .notvisible {
+            display: none;
+        }
+
+        .cross {
+            width: 50px;
+            height: 50px;
+            opacity: 0;
+            display: flex;
+            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.158);
+            border-radius: 100px;
+            font-size: 1rem;
+            font-weight: 600;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            /* top: -20px; */
+            /* display: none; */
+        }
+
+        .cross-show {
+            display: flex;
+            opacity: 1;
+
+        }
+
+        .minmax {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #inform-icon {
+            width: 200px;
+
+        }
+
+        .time-data-cont {
+            width: 90vw;
+            border-radius: 30px;
+            height: 15vh;
+            display: flex;
+            padding: 10px;
+            background-color: #ffffff;
+        }
+
+        .time-data {
+            /* background-color: tomato; */
+            width: 20%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: black;
+            font-size: 0.8rem;
+            justify-content: space-around;
+            font-weight: 700;
+            margin: 2px;
+            height: 100%;
+        }
+
+        #time-icon {
+            width: 90%;
+        }
+
+        #temp-icon {
+            position: absolute;
+            bottom: 0px;
+            width: 50%;
+            opacity: 0.5;
+            right: 0px;
+        }
+
+        .name {
+            text-transform: uppercase;
+            font-weight: 900;
+            opacity: 0.5;
+            letter-spacing: 3px;
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="search">
+            <form id="form">
+
+                <input type="text" id="input" placeholder=" Search for weather">
+                <button type="submit"><i class="fa fa-search"></i> </button>
+            </form>
+        </div>
+        <!-- <div class="options" id="options">
+            <button class="btn selected"> Today</button>
+            <button class="btn"> Tommorow</button>
+
+
+        </div> -->
+        <div class="maincard" id="main">
+            <span class="name"> --- </span>
+            <span class="temp" id="temp"> ---</span>
+            <span class="description"> ---</span>
+            <img src="" id="temp-icon" alt="" srcset="">
+        </div>
+        <br>
+        Detailed view
+        <div class="week" id="week">
+            <div class="card" id="1" onclick="expand('1');">
+                <span class="big-font">Tuesday</span>
+            </div>
+            <div class="card" id="2" onclick="expand('2')">
+
+            </div>
+            <!-- <div class="card" id="3" onclick="expand('3')">
+
+
+            </div> -->
+
+
+        </div>
+        <div class="information" id="inform" onclick="hide()" onblur="hide()">
+            <button class="cross cross-show" id="cross" onclick="hide()"> X </button>
+            <span id="day" style="font-weight: 400; padding: 10px;"> Monday</span>
+            <img src="moon.svg" alt="" srcset="" id="inform-icon">
+            <span style="display: flex; flex-direction: column; align-items: center;">
+                <span id="avg-temp">40&deg</span>
+                <span id="minmax">
+                    <span>
+                        <span class="infor-min-temp">
+                            MIN 56&deg
+                        </span>
+                        <span class="infor-min-temp">
+                            MIN 56&deg
+                        </span>
+                    </span>
+
+
+                </span>
+            </span>
+            <div class="time-data-cont">
+                <span class="time-data">
+                    18:00
+                    <img src="icons8-star.gif" id="time-icon" alt="" srcset="">
+                    <span id=time-data-temp>26&deg</span>
+                </span>
+                <span class="time-data"></span>
+
+                <span class="time-data"></span>
+                <span class="time-data"></span>
+                <span class="time-data"></span>
+                <span class="time-data"></span>
+
+            </div>
+
+        </div>
+        <script src="main.js"></script>
+</body>
+
+</html>
